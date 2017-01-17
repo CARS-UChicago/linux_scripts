@@ -1,0 +1,11 @@
+PY=/usr/bin/python
+SH=/bin/sh
+EHOME=/home/epics
+BACKUPDIR=/var/work/epics/backups
+02  * * * * $PY $EHOME/bin/archiver             >> $BACKUPDIR/archiver.log 2>&1
+51 23 * * * $PY $EHOME/bin/daily_backup         >> $BACKUPDIR/dailies.log 2>&1
+32  * * * * $PY $EHOME/SaveRestore/save_iocboot >> $EHOME/SaveRestore/Save.log 2>&1
+35 02 * * * $PY $EHOME/bin/archive_idl_files    >> $EHOME/logs/archive_idl.log 2>&1
+39  * * * * $SH $EHOME/bin/sync_adls             > /dev/null 2>&1
+49  * * * * $SH $EHOME/bin/adl2caqtdm            > /dev/null 2>&1
+
