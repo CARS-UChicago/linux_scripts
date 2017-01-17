@@ -1,0 +1,87 @@
+#!/usr/bin/env python 
+# mount/remount machine via samba/cifs
+#
+# last modified: Sep 6, 2008 M. Newville
+#
+
+mounts = """
+## machine_name:  dir1 dir2 ....
+
+cars5:  /Data /Users
+"""
+
+domain='cars.aps.anl.gov'
+
+smb_mnt='/sbin/mount.cifs'
+smb_opts='-o rw,uid=401,gid=400,credentials=/root/smbmount/credentials'
+
+# uids: detector=849612640 
+#       epics=849601092
+# gids: domain_users=849600513
+
+smb_opts='-o rw,soft,uid=849612640,gid=849600513,credentials=/root/smbmount/credentials'
+
+import os
+import sys
+import time
+try:
+    import subprocess
+    HAS_subprocess = True
+except:
+    pass
+
+def exec_popen(cmd):
+    if HAS_subprocess:
+        p = subprocess.Popen(cmd.split())
+    else:
+        os.popen2(cmd)
+
+def read_mount_data(s):
+    x = []
+    for i in s.split('\n'):
+        i = i.strip()
+        if len(i)>3 and not i.startswith('#'):
+            # print i
+            machine,share_string = i.split(':')
+            mount = machine
+            if ' ' in mount:   machine,mount = machine.split()
+            machine = machine.strip()
+            mount = mount.strip()
+            shares = tuple(share_string.split())
+
+            x.append( ( machine, mount, shares))
+    return x            
+
+
+this_machine = os.uname()[1]
+
+for host,mount_point,shares in read_mount_data(mounts):
+    fullname = "%s.%s" % (host,domain)
+    if fullname == this_machine: continue
+    for d in shares:
+        if d.startswith('/'): d = d[1:]
+        localmount = os.path.join('/',mount_point, d)
+
+        try:
+            if not os.path.exists(localmount):   os.makedirs(localmount)
+        except OSError:
+            pass
+        lendir = 0
+        try:
+            lendir = len(os.listdir(localmount))
+        except OSError:
+            lendir = -1
+
+        cmd = "%s //%s/%s %s %s" % (smb_mnt, fullname,d,localmount,smb_opts)
+        print("# %s" % cmd)
+        if lendir == 0:
+            cmd = "%s //%s/%s %s %s" % (smb_mnt, fullname,d,localmount,smb_opts)
+            sys.stdout.write("#mounting %s\n" % (cmd))
+            exec_popen(cmd)
+            time.sleep(0.2)
+        elif lendir > 0:
+            print "already mounted: %s (%i dirs)" % (localmount, lendir)
+
+        else:
+            print "drive failed to mount: %s" % localmount
+

@@ -1,0 +1,107 @@
+#!/usr/bin/env python 
+#   mount (or remount) remote machines via nfs
+#
+# last modified: Sept 10, 2008 M. Newville
+#
+# Usage:  edit the 'mounts' string, and re-run this script
+
+## The syntax for mount data must be 1 of these two:
+## machine_name:  dir1 dir2 dir3 ...
+## machine_name local_mountpoint:  dir1 dir2 dir3 ...
+
+## if the 'local_mountpoint' is not set, the machine_name will be used.
+## so that
+##   millenia:  /home
+## will mount millenia's /home directory as
+##   /millenia/home
+## while
+##   millenia m_tmp:  /home
+## would  mount millenia's /home directory as
+## /m_tmp/home
+
+## the local directories for the mountpoints will be made locally as needed.
+## And, of course, the drives to be mounted must be exported by the
+## host machine. 
+    
+mounts = """
+# machine_name local_mountpoint:  dir1 dir2 ....
+ion ion:  /usr/local  /home /work /www
+# corvette oldcorvette:  /usr/local  /home /work /www
+millenia:  /usr/local  /home /work /www
+s13dserv: /APSshare
+
+# idea:  /usr/local /home /work
+# element:  /home /www 
+# ion:  /home /www /work
+
+# machine_name:  dir1 dir2 ....
+
+        
+# baja:                   /home
+# gse-pilatus1:           /home /disk2
+# gse-pilatus2:           /home /disk2
+    
+"""
+##
+
+import os, sys, time
+
+try:
+    import subprocess
+    HAS_subprocess = True
+except:
+    pass
+
+def exec_popen(cmd):
+    if HAS_subprocess:
+        p = subprocess.Popen(cmd.split())
+    else:
+        os.popen2(cmd)
+
+domain  = 'cars.aps.anl.gov'
+mnt_cmd = '/bin/mount -t nfs -o rw,nosuid,nodev,soft'
+
+def read_mount_data(s):
+    x = []
+    for i in s.split('\n'):
+        i = i.strip()
+        if len(i)>3 and not i.startswith('#'):
+            # print i
+            machine,share_string = i.split(':')
+            mount = machine
+            if ' ' in mount:   machine,mount = machine.split()
+            machine = machine.strip()
+            mount = mount.strip()
+            shares = tuple(share_string.split())
+
+            x.append( ( machine, mount, shares))
+    return x            
+
+def nfs_mount(mountdata):
+    this_machine = os.uname()[1]
+    n = 0
+    for host, mount_point, shares in read_mount_data(mountdata):
+        fullname = "%s.%s" % (host,domain)
+        if fullname == this_machine: 
+            continue  #skip mounts to this machine!!
+        for d in shares:
+            if d.startswith('/'): d = d[1:]
+            localmount = os.path.join('/',mount_point, d)
+            if not os.path.exists(localmount):
+                os.makedirs(localmount)
+
+            # note that files seen in the mount directory  
+            # is used as the test for "is mounted".
+            if (0 == len(os.listdir(localmount))):
+                cmd = "%s %s:/%s %s" % (mnt_cmd, fullname, d, localmount)
+
+                sys.stdout.write("#mounting: %s\n" % (cmd))
+                exec_popen(cmd)
+                n = n + 1
+            else:
+                sys.stdout.write("already mounted: %s\n" % localmount)
+    return n
+#
+
+nfs_mount(mounts)
+

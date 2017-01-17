@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+""" do ls on all cifs mounts, just to see if they are alive"""
+import sys
+import time
+import os
+from subprocess import check_output
+
+mounts = check_output(['cat', '/etc/mtab']).split('\n')
+
+for mline in mounts:
+    words = mline.split()
+    if len(words)> 3 and  words[2] == 'cifs':
+        mountpoint = words[1]
+        files = os.listdir(mountpoint)
+        print(mountpoint, len(files))

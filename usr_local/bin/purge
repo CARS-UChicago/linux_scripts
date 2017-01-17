@@ -1,0 +1,18 @@
+
+# Purge shell script written by Jonathan Sari (surge@milton)
+#
+# Removes old versions of files (using the emacs version format)).
+# This script uses the Bourne shell because it's faster than the C-shell.
+rmm='rm -f'
+if [ $# = 0 ]                    # If no command arguments
+then
+    exec $rmm  *~ .*~ \#*  *.bak *.old     # Purge all temporary files in .
+else
+    for i do                     # in "$@" is assumed.
+       if [ -d $i ] ; then       # If the file is a directory
+          $rmm  $i/*~ $i/.*~ $i/\#*  $i/*.bak $i/*.old
+       else                      # The argument is a plain file.
+          $rmm  $i~ \#$i\# $i.bak $i.old
+       fi
+    done
+fi
