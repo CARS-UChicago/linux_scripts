@@ -1,0 +1,98 @@
+/home millenia.cars.aps.anl.gov(rw,async,subtree_check) \
+      bmw.cars.aps.anl.gov(rw,async,subtree_check) \
+      cars5.cars.aps.anl.gov(rw,async,subtree_check) \
+      corvette.cars.aps.anl.gov(rw,async,subtree_check) \
+      ion.cars.aps.anl.gov(rw,async,subtree_check) \
+      mini.cars.aps.anl.gov(rw,async,subtree_check) \
+      idea.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-pilatus1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-pilatus2.cars.aps.anl.gov(rw,async,subtree_check) \
+      164.54.160.108(rw,async,subtree_check) \
+      gse-marccd1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd2.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd3.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd4.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marip1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marip2.cars.aps.anl.gov(rw,async,subtree_check) \
+      micra.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat28.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat40.cars.aps.anl.gov(rw,async,subtree_check) \
+      cars3.uchicago.edu(rw,async,subtree_check) \
+      ioc13lab.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13lab2.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bma.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bmc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bmd.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13ida.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13idc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13idd.cars.aps.anl.gov(rw,async,subtree_check)\
+      ioc13ide.cars.aps.anl.gov(rw,async,subtree_check)\
+      ioc13ge1.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13ge2.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15lab.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15ida.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idb.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idd.cars.aps.anl.gov(rw,async,subtree_check) \
+      164.54.160.208(rw,async,subtree_check) \
+      chemmatmac1.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat50.cars.aps.anl.gov(rw,async,subtree_check) \
+      164.54.162.8(rw,async,subtree_check) \
+      164.54.160.33(rw,async,subtree_check)
+
+/usr/local millenia.cars.aps.anl.gov(rw,async,subtree_check) \
+      bmw.cars.aps.anl.gov(rw,async,subtree_check) \
+      cars5.cars.aps.anl.gov(rw,async,subtree_check) \
+      corvette.cars.aps.anl.gov(rw,async,subtree_check) \
+      vincent.cars.aps.anl.gov(rw,async,subtree_check) \
+      ion.cars.aps.anl.gov(rw,async,subtree_check) \
+      mini.cars.aps.anl.gov(rw,async,subtree_check) \
+      idea.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-pilatus1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-pilatus2.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd2.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd3.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marccd4.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marip1.cars.aps.anl.gov(rw,async,subtree_check) \
+      gse-marip2.cars.aps.anl.gov(rw,async,subtree_check) \
+      micra.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat28.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat40.cars.aps.anl.gov(rw,async,subtree_check) \
+      chemmat50.cars.aps.anl.gov(rw,async,subtree_check) \
+      cars3.uchicago.edu(rw,async,subtree_check) \
+      ioc13lab.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13lab2.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bma.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bmc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13bmd.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13ida.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13idc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13idd.cars.aps.anl.gov(rw,async,subtree_check)\
+      ioc13ide.cars.aps.anl.gov(rw,async,subtree_check)\
+      ioc13ge1.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc13ge2.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15lab.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15ida.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idb.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idc.cars.aps.anl.gov(rw,async,subtree_check) \
+      ioc15idd.cars.aps.anl.gov(rw,async,subtree_check) \
+      164.54.160.208(rw,async,subtree_check) \
+      164.54.160.108(rw,async,subtree_check) \
+      chemmatmac1.cars.aps.anl.gov(rw,async,subtree_check) \
+      164.54.162.8(rw,async,subtree_check) \
+      164.54.160.33(rw,async,subtree_check)
+
+/www millenia.cars.aps.anl.gov(rw,async,subtree_check) \
+     element.cars.aps.anl.gov(rw,async,subtree_check) \
+     ion.cars.aps.anl.gov(rw,async,subtree_check) \
+     idea.cars.aps.anl.gov(rw,async,subtree_check) \
+     corvette.cars.aps.anl.gov(rw,async,subtree_check) \
+
+/work millenia.cars.aps.anl.gov(rw,async,subtree_check) \
+     element.cars.aps.anl.gov(rw,async,subtree_check) \
+     ion.cars.aps.anl.gov(rw,async,subtree_check) \
+     idea.cars.aps.anl.gov(rw,async,subtree_check) \
+     mini.cars.aps.anl.gov(rw,async,subtree_check) \
+     corvette.cars.aps.anl.gov(rw,async,subtree_check) \
+

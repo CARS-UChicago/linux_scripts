@@ -1,0 +1,60 @@
+[global]
+
+ workgroup = CARS_NT_DOMAIN
+ client signing = yes
+ client use spnego = yes
+ kerberos method = secrets and keytab
+ log file = /var/log/samba/%m.log
+ password server = 164.54.162.61, 164.54.160.45, *
+ realm = CARS.APS.ANL.GOV
+ security = ads
+ template shell = /bin/false
+ template homedir = /home/%U
+
+#============================ Share Definitions ==============================
+
+[homes]
+	comment = Home Directories
+	browseable = no
+	writable = yes
+
+[local]
+	comment = user local (read only)
+	path = /usr/local/
+	public = yes
+	read only = yes
+
+[local_rw]
+	comment = user local (read/write)
+	path = /usr/local
+	writable = yes
+	public = no 
+	guest ok = no
+	force directory mode = 0777
+	force create mode = 0775
+	valid users = epics@cars.aps.anl.gov
+
+[people]
+	comment = home directories (read only)
+	path = /home/
+	public = yes
+	read only = yes
+
+[people_rw]
+	comment = home directories (read/write)
+	path = /home/
+	writable = yes
+	public = no 
+	guest ok = no
+	force directory mode = 0755
+	force create mode = 0755
+	# force group = "domain users"
+	valid users = @"Domain Users@cars.aps.anl.gov"
+
+[spec]
+	comment = spec account (read/write)
+	path = /home/specadm/
+	writable = yes
+	force directory mode = 0777
+	force create mode = 0775
+	valid users = @"GSECARS Spec@cars.aps.anl.gov"
