@@ -1,0 +1,9 @@
+
+Yum packages required:
+
+IDL License manager may complain with 
+    error: lib64ld-lsb-x86-64.so.3: bad ELF interpreter
+
+The solution:
+
+   yum install redhat-lsb
