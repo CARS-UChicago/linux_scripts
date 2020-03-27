@@ -12,7 +12,7 @@ WORKDIR  = "/var/work/backups"
 class Tape:
     """ Tape class """
 
-    
+
     params = {"tar"       : "tar czSlf ",
               'dir':        "/work/incrementals",
               "listfile"  : ".NEWFILES",
@@ -21,8 +21,7 @@ class Tape:
               "drive_file": "/etc/mtab",
               "drive_type": "xfs"}
 
-    ignore_dirs = ['.mozilla', '.gnome', '.kde',
-                   '^/tmp', 
+    ignore_dirs = ['^/tmp',
                    '^/var/work/',
                    '^/usr/local/mysql',
                    '^/home/newville/auto_backup',
@@ -65,9 +64,9 @@ class Tape:
         self.drives = []
         for i in lines:
             u = i.split()
-            if u[2].startswith(self.params['drive_type']): 
+            if u[2].startswith(self.params['drive_type']):
                 self.drives.append(u[1])
-        
+
         print "drives :",  self.drives
 
         self.logfile = open(self.log_file, 'w')
@@ -76,7 +75,7 @@ class Tape:
     def write_log(self,s):
         if self.debug:   sys.stdout.write( s)
         self.logfile.write(s)
-        
+
     def __del__(self):
         self.logfile.close()
 
@@ -111,10 +110,10 @@ class Tape:
 
     def backup_to_file(self, fname=None, listfile=None, age=None):
         " save a local-disk copy of the daily incremental"
-        if age is not None: 
+        if age is not None:
             self.age = age
         if fname is None:
-            fname   = os.path.join(self.params['dir'], 
+            fname   = os.path.join(self.params['dir'],
                                    time.strftime("%d", time.localtime()))
         self.list_new_files(listfile=listfile, age=age)
         cmd = "%s %s.tar.gz -T %s " % (self.params['tar'], fname, self.listfile)
@@ -124,4 +123,3 @@ if (__name__ == '__main__'):
     t = Tape(debug=True, log_file='test.log',age=1.4)
     t.show_config()
     t.list_new_files()
-

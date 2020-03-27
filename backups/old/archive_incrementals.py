@@ -10,9 +10,9 @@ destbase = '/corvette/work/Archives'
 
 months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-rsync_cmd = 'rsync -vaz '
+rsync_cmd = 'rsync -va '
 def do_sys(cmd):
-    print '# %s' % cmd
+    print( '# %s' % cmd)
     os.system(cmd)
 
 for mach, folder in sources.items():
