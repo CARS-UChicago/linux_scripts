@@ -45,7 +45,7 @@ def incremental_backup(folders, top='.', target='.', age=1.1, tformat='%d'):
     os.system(cmd)
 
 def full_backup(folders=None, top=None, target=None):
-    '''full backup - all files that are younger than 50,000 days old'''
+    '''full backup = incremental_backup(age=50000) '''
     incremental_backup(folders=folders, top=top, target=target,
                        age=50000, tformat='%Y_%b%d')
 
