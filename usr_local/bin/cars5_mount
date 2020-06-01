@@ -17,9 +17,9 @@ shares = ('Data', 'Users') ### , 'Server')
 
 # test that this is run as sudo
 if not (os.getuid()==0  and 'SUDO_USER' in os.environ):
-    print '\n===== Must run with sudo! =====\n'
-    print '~> sudo cars5_mount' 
-    print 'Then give password for your account (not root password)\n'
+    print( '\n===== Must run with sudo! =====\n')
+    print( '~> sudo cars5_mount' )
+    print( 'Then give password for your account (not root password)\n')
     sys.exit()
 
 username = os.environ['SUDO_USER']
@@ -48,13 +48,13 @@ for share in shares:
     cmd  = 'mount %s //%s/%s %s' % (opts, fqdn, share, mount_point)
     flist = os.listdir(mount_point)
     if len(flist) < 2:
-        print '##  ', cmd
+        print( '##  ', cmd)
         os.system(cmd)
         time.sleep(0.1)
         flist = os.listdir(mount_point)
     ftotal = ftotal + len(flist)    
 
 if ftotal < 2:
-    print 'Looks like the password is not correct or cars5 cannot be found. Try again?'
+    print( 'Looks like the password is not correct or cars5 cannot be found. Try again?')
 
 os.unlink(cred_file)

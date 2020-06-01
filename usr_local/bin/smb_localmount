@@ -41,7 +41,7 @@ def read_mount_data(s):
     for i in s.split('\n'):
         i = i.strip()
         if len(i)>3 and not i.startswith('#'):
-            # print i
+            # print(i)
             machine,share_string = i.split(':')
             mount = machine
             if ' ' in mount:   machine,mount = machine.split()
@@ -80,8 +80,8 @@ for host,mount_point,shares in read_mount_data(mounts):
             exec_popen(cmd)
             time.sleep(0.2)
         elif lendir > 0:
-            print "already mounted: %s (%i dirs)" % (localmount, lendir)
+            print("already mounted: %s (%i dirs)" % (localmount, lendir))
 
         else:
-            print "drive failed to mount: %s" % localmount
+            print("drive failed to mount: %s" % localmount)
 
