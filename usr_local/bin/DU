@@ -5,7 +5,7 @@ f_old="DU.old"
 
 if [ -f $f_sorted ] ; then cp $f_sorted $f_old ; fi
 
-du -x > $f_unsort
+du -BM -x > $f_unsort
 echo 'now sorting...'
 cat $f_unsort | sort -nr > $f_sorted
 
