@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/python 
 #   mount (or remount) remote machines via nfs
 #
 # last modified: Sept 10, 2008 M. Newville
@@ -25,18 +25,13 @@
     
 mounts = """
 # machine_name local_mountpoint:  dir1 dir2 ....
-ion ion:  /usr/local  /home /work /www
-# corvette oldcorvette:  /usr/local  /home /work /www
+# ion:       /usr/local  /home /work /www
+cars4:     /usr/local  /home 
 millenia:  /usr/local  /home /work /www
-s13dserv: /APSshare
+s13dserv:  /APSshare
 
-# idea:  /usr/local /home /work
-# element:  /home /www 
-# ion:  /home /www /work
+bmw:     /home
 
-# machine_name:  dir1 dir2 ....
-
-        
 # baja:                   /home
 # gse-pilatus1:           /home /disk2
 # gse-pilatus2:           /home /disk2
@@ -59,14 +54,14 @@ def exec_popen(cmd):
         os.popen2(cmd)
 
 domain  = 'cars.aps.anl.gov'
-mnt_cmd = '/bin/mount -t nfs -o rw,nosuid,nodev,soft'
+mnt_cmd = '/bin/mount -t nfs -o rw,nosuid,nodev,nolock,soft,vers=3'
+# mnt_cmd = '/bin/mount -t nfs -o rw,nosuid,nodev,nolock,soft'
 
 def read_mount_data(s):
     x = []
     for i in s.split('\n'):
         i = i.strip()
         if len(i)>3 and not i.startswith('#'):
-            # print( i)
             machine,share_string = i.split(':')
             mount = machine
             if ' ' in mount:   machine,mount = machine.split()
