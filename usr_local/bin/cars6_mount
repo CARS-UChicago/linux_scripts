@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+#
+#  This will attempt to mount cars6 to to /home/USER/cars6
+#
+import os
+import sys
+
+import time
+import stat
+from getpass import getpass
+from subprocess import check_output
+
+fqdn   = 'cars.aps.anl.gov' 
+domain = 'CARS_NT_DOMAIN'
+hosts  = {'cars6': ('Data',), 'cars5': ('Users',)}
+links = {'cars5/Data': 'cars6/Data'}
+
+# test that this is run as sudo
+if not (os.getuid()==0  and 'SUDO_USER' in os.environ):
+    print( '\n===== Must run with sudo! =====\n')
+    print( '~> sudo cars6_mount' )
+    print( 'Then give password for your account (not root password)\n')
+    sys.exit()
+
+username = os.environ['SUDO_USER']
+
+u_uid = int(check_output(['id', '-u', username]).split()[0])
+u_gid = int(check_output(['id', '-g', username]).split()[0])
+u_dir = os.path.join('/home', username)
+
+cred_file = os.path.join(u_dir, '.carsmount')
+
+prompt = 'Enter %s password for %s>' % (domain, username)
+passphrase = getpass(prompt)
+with open(cred_file, 'w') as fout:
+    fout.write("username=%s\npassword=%s\n" % (username, passphrase))
+
+time.sleep(0.5)
+os.chown(cred_file, u_uid, u_gid)
+os.chmod(cred_file, stat.S_IRUSR)
+    
+ftotal = 0
+for host, shares in hosts.items():
+    for share in shares:
+        mount_point = os.path.join(u_dir, host, share)
+        if not os.path.exists(mount_point):
+            os.makedirs(mount_point)
+        opts = '-t cifs -o rw,gid=%i,uid=%i,credentials=%s' % (u_gid, u_uid, cred_file)
+        # opts = '-t cifs -o rw,vers=3.0,gid=%i,uid=%i,credentials=%s' % (u_gid, u_uid, cred_file)
+        cmd  = 'mount %s //%s.%s/%s %s' % (opts, host, fqdn, share, mount_point)
+        flist = os.listdir(mount_point)
+        if len(flist) < 2:
+            print('## %s ' % cmd)
+            os.system(cmd)
+            time.sleep(0.1)
+            flist = os.listdir(mount_point)
+        ftotal = ftotal + len(flist)    
+
+if ftotal < 5:
+    print( 'Looks like the password is not correct or cars5 and cars6 cannot be found. Try again?')
+
+for dest, source in links.items():
+    dest = os.path.join(u_dir, dest)
+    if os.path.exists(dest) and not os.path.islink(dest):
+        if os.path.isdir(dest):
+            os.rmdir(dest)
+        else:  
+            os.unlink(dest)
+    if not os.path.exists(dest):
+        os.symlink(os.path.join(u_dir, source), dest, target_is_directory=True)
+        os.chown(dest, u_uid, u_gid, follow_symlinks=False)
+time.sleep(0.1)
+os.unlink(cred_file)
