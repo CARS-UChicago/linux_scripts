@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """ do ls on all cifs mounts, just to see if they are alive"""
-from __future__ import print_function
 import sys
 import time
 import os
 from subprocess import check_output
 
-mounts = check_output(['cat', '/etc/mtab']).split('\n')
+mounts = check_output(['cat', '/etc/mtab']).decode('utf-8').split('\n')
 
 for mline in mounts:
     words = mline.split()
